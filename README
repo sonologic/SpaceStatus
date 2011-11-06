@@ -1,0 +1,16 @@
+SpaceStatus
+===========
+
+Semi-generic framework for registering and processing space status
+events for hackerspaces, such as:
+- space open / closed
+- door open / closed
+- door unlocked (with name)
+- spaceloop open / closed
+
+Output to for eg:
+- database (event log)
+- irc
+- external url's
+- http (json)
+
