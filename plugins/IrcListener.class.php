@@ -9,7 +9,7 @@ class IrcListener extends  EventListener {
 	      if($value=='open') $msg="opened"; else $msg="closed";
 	      break;
 	    case 'unlock': 
-	      $msg="is unlocked by ".$value->getAnonymized();
+	      $msg="is unlocked by ".$value->getIRC();
 	      break;
 	    case 'spaceloop':
 	      if($value=='open') 

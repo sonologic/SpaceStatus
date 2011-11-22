@@ -6,8 +6,9 @@ if(!isset($ldapconn)) {
 }
 
 class IButton {
-  private $anonymized="anoniempje";
-  private $actual="unknown";
+  private $status=TRUE;
+  private $IRC=TRUE;
+  private $actual="onbekend";
 
   public function __construct($givenHash) {
     global $ldap_uri;
@@ -41,8 +42,9 @@ class IButton {
           $hash=hash("sha256",$secret.$key,false);
 
           if($hash==$givenHash) {
-            if(isset($entry[chanmsgentry][0]) && $entry[chanmsgentry][0]=="TRUE") $this->anonymized=$entry[cn][0];
             $this->actual=$entry[cn][0];
+            if(isset($entry[chanmsgentry][0]) && $entry[chanmsgentry][0]=="FALSE") $this->IRC=FALSE;
+            if(isset($entry[statusentry][0]) && $entry[statusentry][0]=="FALSE") $this->status=FALSE;
 	    return;
 	  }
         }
@@ -50,8 +52,19 @@ class IButton {
     }
   }
 
-  public function getAnonymized() {
-    return $this->anonymized;
+  public function getIRC() {
+    if($this->IRC) 
+      return $this->actual;
+    else
+      return "anoniempje";
+  }
+
+  public function getStatus() {
+    if($this->actual=='juerd') return "anoniempje";
+    if($this->status) 
+      return $this->actual;
+    else
+      return "anoniempje";
   }
 
   public function getActual() {

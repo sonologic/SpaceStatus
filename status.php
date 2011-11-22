@@ -22,17 +22,24 @@ $log=$db->unlockLog();
 
 $checkins=array();
 foreach($log as $event) {
-  $checkins[$event['value']->getAnonymized()]=array(
-	't' => $event['t']
+  $checkins[] = array(
+	'name' => $event['value']->getStatus(),
+	'type' => 'check-in',
+	't' => strtotime($event['t'])
   );
 }
 
 $reply=array(
+	'api'		=> '0.9',
 	'space'		=> 'RevSpace',
 	'url'		=> 'https://revspace.nl',
 	'address' 	=> 'Binckhorstlaan 172, 2595 BT Den Haag, The Netherlands',
-	'phone'		=> '+31702127681',
-	'cam'		=> 'http://cam1.revspace.nl/',
+	'contact'	=> array(
+	  'phone'		=> '+31702127681',
+	  'ml'			=> 'general@revspace.nl',
+	  'irc'			=> 'irc://freenode/#revspace'
+	),
+	'cam'		=> array('http://cam1.revspace.nl/'),
 	'logo'		=> 'https://revspace.nl/mediawiki/RevspaceLogoOnGreen.png',
 	'open'		=> ($status['value']=='open'),
 	'lastchange'	=> strtotime($status['t']),
